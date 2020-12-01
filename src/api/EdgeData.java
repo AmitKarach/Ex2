@@ -1,6 +1,19 @@
 package api;
 
 public class EdgeData implements edge_data {
+
+    private int src,des,tag;
+    private double weight;
+    private String info;
+
+
+
+    public EdgeData (int s, int d, double w)
+    {
+        src= s;
+        des=d;
+        weight=w;
+    }
     /**
      * The id of the source node of this edge.
      *
@@ -8,7 +21,7 @@ public class EdgeData implements edge_data {
      */
     @Override
     public int getSrc() {
-        return 0;
+        return src;
     }
 
     /**
@@ -18,7 +31,7 @@ public class EdgeData implements edge_data {
      */
     @Override
     public int getDest() {
-        return 0;
+        return des;
     }
 
     /**
@@ -26,7 +39,7 @@ public class EdgeData implements edge_data {
      */
     @Override
     public double getWeight() {
-        return 0;
+        return weight;
     }
 
     /**
@@ -36,7 +49,7 @@ public class EdgeData implements edge_data {
      */
     @Override
     public String getInfo() {
-        return null;
+        return info;
     }
 
     /**
@@ -45,8 +58,9 @@ public class EdgeData implements edge_data {
      * @param s
      */
     @Override
-    public void setInfo(String s) {
-
+    public void setInfo(String s)
+    {
+        info=s;
     }
 
     /**
@@ -57,7 +71,7 @@ public class EdgeData implements edge_data {
      */
     @Override
     public int getTag() {
-        return 0;
+        return tag;
     }
 
     /**
@@ -67,7 +81,8 @@ public class EdgeData implements edge_data {
      * @param t - the new value of the tag
      */
     @Override
-    public void setTag(int t) {
-
+    public void setTag(int t)
+    {
+        tag=t;
     }
 }
