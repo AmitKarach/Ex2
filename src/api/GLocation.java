@@ -1,4 +1,4 @@
-package api;
+package ex2.src;
 import java.lang.Math;
 
 public class GLocation implements geo_location {
@@ -8,6 +8,12 @@ public class GLocation implements geo_location {
       x=newx;
       y=newy;
       z=newz;
+    }
+    public GLocation(geo_location temp) // Needed Constructor
+    {
+        x= temp.x();
+        y= temp.y();
+        z= temp.z();
     }
     @Override
     public double x() {

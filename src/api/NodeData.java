@@ -1,4 +1,4 @@
-package api;
+package ex2.src;
 public class NodeData implements node_data {
     /**
      * Returns the key (id) associated with this node.
@@ -10,6 +10,13 @@ public class NodeData implements node_data {
     private double wei;
     private geo_location gl;
 
+    public NodeData(geo_location location,int id) { // Better Constructor
+        this.key = id;
+        this.setLocation(location);
+        this.setWeight(0);
+        this.setInfo("");
+        this.setTag(0);
+    }
     public NodeData(int k)
     {
         key= k;
@@ -29,7 +36,7 @@ public class NodeData implements node_data {
     public geo_location getLocation() {
         if(gl!=null)
             return gl;
-        else return null;
+        return null;
     }
 
     /**
