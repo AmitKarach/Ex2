@@ -8,14 +8,19 @@ import java.util.Iterator;
 public class DS_DWGraph implements directed_weighted_graph, Serializable {
     private HashMap<Integer,node_data> Vertices;
     private HashMap<Integer,HashMap<Integer,edge_data>> Edges;
-    private int mc,edgecount,id;
+    private int verticeCounter;
+    private int edgesCounter;
+    private int mc;
 
 
     public DS_DWGraph ()
     {
-        Vertices=new HashMap<>();
-        Edges=new HashMap<>();
-        id=0;
+        Vertices = new HashMap <Integer,node_data>();
+        Edges = new HashMap <Integer,HashMap<Integer,edge_data>>();
+        verticeCounter = 0;
+        edgesCounter = 0;
+        mc=0;
+
     }
     /**
      * returns the node_data by the node_id,
@@ -40,12 +45,13 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      * @param dest
      * @return
      */
+   // More Elegant approach with try & Catch
     @Override
     public edge_data getEdge(int src, int dest) {
-        try {
+        if (Edges.containsKey(src) && Edges.get(src).containsKey(dest)) {
             return Edges.get(src).get(dest);
         }
-        catch(Exception e) {
+        else {
             return null;
         }
     }
@@ -57,14 +63,22 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      * @param n
      */
     @Override
-    public void addNode(node_data n) {
-        {
-            id++;
-            int sizeBefore = this.nodeSize();
-            this.Vertices.put(id,new NodeData(new GLocation(n.getLocation()),id));
-            this.Edges.put(id,new HashMap<Integer,edge_data>());
-            if(this.nodeSize() -1 == sizeBefore) {this.mc++;}
+    public void addNode(node_data n) throws RuntimeException {
+        if (this.Vertices == null) {
+            DS_DWGraph temp = new DS_DWGraph();
+            this.Edges = temp.Edges;
+            this.Vertices = temp.Vertices;
+            this.verticeCounter = temp.verticeCounter;
         }
+        if (this.Vertices.get(n.getKey()) == null) {
+            this.Vertices.put(n.getKey(),n);
+            this.Edges.put(n.getKey(),new HashMap<Integer,edge_data>());
+            verticeCounter++;
+        }
+        else {
+            this.Vertices.put(n.getKey(),n);
+        }
+        mc++;
     }
 
     /**
@@ -77,19 +91,16 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      */
     @Override
     public void connect(int src, int dest, double w) {
-        if(this.getNode(src)==null || this.getNode(dest)==null || w<0 || src == dest) return;
-        int sizeBefore = this.edgeSize();
-        try {
-            if(this.Edges.get(src).get(dest)==null)
-                this.edgecount++;
-            this.Edges.get(src).put(dest, new EdgeData(src,dest,w));
+        node_data a = getNode(src);
+        node_data b = getNode(dest);
+        if(a != null && b!=null) {
+            EdgeData e = new EdgeData(this.Vertices.get(src).getKey(), this.Vertices.get(dest).getKey(), w);
+            this.Edges.get(src).put(dest,e);
+            this.edgesCounter++;
+            this.mc++;
         }
-        catch(NullPointerException e){
-            Edges.put(src,new HashMap<Integer,edge_data>());
-            Edges.get(src).put(dest, new EdgeData(src,dest,w));
-            edgecount++;
-        }
-        if(this.edgeSize() -1 == sizeBefore) {this.mc++;}
+
+
     }
 
     /**
@@ -129,22 +140,14 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      */
     @Override
     public node_data removeNode(int key) {
-        node_data nodeToRemove = this.getNode(key);
-        if(nodeToRemove != null) {
-            for (Iterator<node_data> iterator = this.getV().iterator(); iterator.hasNext();) {
-                node_data v = (node_data) iterator.next();
-                this.removeEdge(v.getKey(), key);
-            }
-            if(this.Edges.get(key)!=null) {
-                this.edgecount-=this.Edges.get(key).size();
-                this.mc+=this.Edges.get(key).size();
-            }
-            this.Vertices.remove(key);
+        if (this.Vertices.containsKey(key)) {
+            node_data toReturn = this.Vertices.remove(key);
             this.Edges.remove(key);
-            this.mc++;
+            this.verticeCounter--;
+            mc++;
+            return toReturn;
         }
-
-        return nodeToRemove;
+        return null;
     }
 
     /**
@@ -157,14 +160,15 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      */
     @Override
     public edge_data removeEdge(int src, int dest) {
-        edge_data tempremove = this.getEdge(src,dest);
-        if (tempremove!=null){
-            Edges.get(src).remove(dest); // Because weighted graph, discconect one direction
-            edgecount-=1;
-            mc++;
+        if (this.Edges.containsKey(src)) {
+            edge_data toReturn = this.Edges.get(src).remove(dest);
+            if (toReturn != null) {
+                this.edgesCounter--;
+                mc++;
+            }
+            return toReturn;
         }
-
-        return tempremove;
+        return null;
     }
 
     /**
@@ -175,7 +179,7 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      */
     @Override
     public int nodeSize() {
-        return Vertices.size();
+        return this.verticeCounter;
     }
 
     /**
@@ -186,7 +190,7 @@ public class DS_DWGraph implements directed_weighted_graph, Serializable {
      */
     @Override
     public int edgeSize() { // every edge is an obj so might be smart to just count edge node...
-        return edgecount;
+        return this.edgesCounter;
     }
 
     /**
