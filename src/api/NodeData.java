@@ -1,4 +1,4 @@
-package ex2.src;
+package api;
 public class NodeData implements node_data {
     /**
      * Returns the key (id) associated with this node.

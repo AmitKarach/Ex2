@@ -1,14 +1,14 @@
 
 
-package ex2.test;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import ex2.src.DS_DWGraph;
-import ex2.src.NodeData;
-import ex2.src.edge_data;
-import ex2.src.node_data;
+import api.DS_DWGraph;
+import api.NodeData;
+import api.edge_data;
+import api.node_data;
 
 class GraphTest {
 
@@ -170,7 +170,21 @@ class GraphTest {
 
 
     }
+    @Test
+    final void Amit() {
+        DS_DWGraph g = new DS_DWGraph();
+        node_data n = new NodeData(2);
+        node_data n1 = new NodeData(4);
 
-        }
+        g.addNode(n);
+        g.addNode(n1);
+        g.connect(n.getKey(), n1.getKey(),1.0);
+        g.connect(n1.getKey(), n.getKey(),1.0);
+        g.removeNode(n.getKey());
+
+        assertEquals(null,g.getEdge(n1.getKey(),n.getKey()));
+
+    }
+}
 
 

@@ -1,4 +1,4 @@
-package ex2.src;
+package api;
 import java.lang.Math;
 
 public class GLocation implements geo_location {
