@@ -5,7 +5,7 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import api.DS_DWGraph;
+import api.DWGraph_DS;
 import api.NodeData;
 import api.edge_data;
 import api.node_data;
@@ -16,7 +16,7 @@ class GraphTest {
         @Test
         final void testGetNode() {
                 //Create Graph...
-                DS_DWGraph g = new DS_DWGraph();
+                DWGraph_DS g = new DWGraph_DS();
                 //Create Nodes...
                 node_data n = new NodeData(2);
                 node_data n1 = new NodeData(4);
@@ -33,7 +33,7 @@ class GraphTest {
 
         @Test
         final void testGetEdge() {
-                DS_DWGraph g = new DS_DWGraph();
+                DWGraph_DS g = new DWGraph_DS();
 
                 node_data n = new NodeData(2);
                 node_data n1 = new NodeData(4);
@@ -57,7 +57,7 @@ class GraphTest {
 //
     @Test
     final void testAddNode() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         g.addNode(n);
         assertEquals(g.getNode(n.getKey()), n);
@@ -65,7 +65,7 @@ class GraphTest {
 //
     @Test
     final void testConnect() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         node_data n1 = new NodeData(4);
         node_data n2 = new NodeData(21);
@@ -86,7 +86,7 @@ class GraphTest {
 //
     @Test
     final void testGetV() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
 
         assertTrue(g.getV().size() == g.nodeSize());
     }
@@ -94,7 +94,7 @@ class GraphTest {
 //
     @Test
     final void testRemoveNode() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         g.addNode(n);
 
@@ -105,7 +105,7 @@ class GraphTest {
 
     @Test
     final void testRemoveEdge() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         node_data n1 = new NodeData(4);
 
@@ -121,7 +121,7 @@ class GraphTest {
 
     @Test
     final void testNodeSize() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         node_data n1 = new NodeData(4);
 
@@ -137,7 +137,7 @@ class GraphTest {
 
     @Test
     final void testEdgeSize() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         node_data n1 = new NodeData(4);
         node_data n2 = new NodeData(21);
@@ -158,7 +158,7 @@ class GraphTest {
 
     @Test
     final void testGetMC() {
-            DS_DWGraph g = new DS_DWGraph();
+            DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         g.addNode(n);
 
@@ -172,7 +172,7 @@ class GraphTest {
     }
     @Test
     final void Amit() {
-        DS_DWGraph g = new DS_DWGraph();
+        DWGraph_DS g = new DWGraph_DS();
         node_data n = new NodeData(2);
         node_data n1 = new NodeData(4);
 
