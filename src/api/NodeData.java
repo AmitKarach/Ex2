@@ -1,5 +1,8 @@
 package api;
-public class NodeData implements node_data {
+
+import org.jetbrains.annotations.NotNull;
+
+public class NodeData implements node_data , Comparable{
     /**
      * Returns the key (id) associated with this node.
      *
@@ -133,4 +136,17 @@ public class NodeData implements node_data {
 
 
     }
+
+
+    @Override
+    public int compareTo(Object o)
+    {
+            node_data n = (node_data) o;
+            if (n.getTag()>tag)
+                return -1;
+            if (n.getTag()<tag)
+                return 1;
+            return 0;
+    }
+
 }
