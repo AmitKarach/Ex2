@@ -1,5 +1,7 @@
 package api;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;

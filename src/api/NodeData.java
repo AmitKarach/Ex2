@@ -1,20 +1,18 @@
 package api;
 
-import org.jetbrains.annotations.NotNull;
-
 public class NodeData implements node_data , Comparable{
     /**
      * Returns the key (id) associated with this node.
      *
      * @return
      */
-    private int key,tag;
+    private int id,tag;
     private String info;
     private double wei;
-    private geo_location gl;
+    private geo_location pos;
 
     public NodeData(geo_location location,int id) { // Better Constructor
-        this.key = id;
+        this.id = id;
         this.setLocation(location);
         this.setWeight(0);
         this.setInfo("");
@@ -22,11 +20,11 @@ public class NodeData implements node_data , Comparable{
     }
     public NodeData(int k)
     {
-        key= k;
+        id= k;
     }
     @Override
     public int getKey() {
-        return key;
+        return id;
     }
 
     /**
@@ -37,8 +35,8 @@ public class NodeData implements node_data , Comparable{
      */
     @Override
     public geo_location getLocation() {
-        if(gl!=null)
-            return gl;
+        if(pos !=null)
+            return pos;
         return null;
     }
 
@@ -49,17 +47,17 @@ public class NodeData implements node_data , Comparable{
      */
     @Override
     public void setLocation(geo_location p) {
-        gl=p;
+        pos =p;
     }
 
     @Override
     public String toString() {
         return "NodeData{" +
-                "key=" + key +
+                "key=" + id +
                 ", tag=" + tag +
                 ", info='" + info + '\'' +
                 ", wei=" + wei +
-                ", gl=" + gl +
+                ", gl=" + pos +
                 '}';
     }
 

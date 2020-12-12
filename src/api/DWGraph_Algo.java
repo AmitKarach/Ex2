@@ -131,7 +131,8 @@ public class DWGraph_Algo implements dw_graph_algorithms
     }
 
     @Override
-    public boolean load(String file) {
+    public boolean load(String file)
+    {
         return false;
     }
 
@@ -206,6 +207,9 @@ public class DWGraph_Algo implements dw_graph_algorithms
         return shorti;
     }
 
+    public ArrayList<node_data> getParents() {
+        return parents;
+    }
 
 
 
