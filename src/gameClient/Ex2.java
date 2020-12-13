@@ -17,14 +17,16 @@ public class Ex2 {
         String s = game.getGraph();
         System.out.println(game.getAgents());
 //        Gson gson = new Gson();
-//       DWGraph_DS g = new DWGraph_DS();
+       DWGraph_DS g = new DWGraph_DS();
 ////        System.out.println(g.nodeSize());
 //
-//        DWGraph_Algo graph =new DWGraph_Algo();
-//        graph.init(g);
-//        graph.load(s);
+        DWGraph_Algo graph =new DWGraph_Algo();
+        graph.init(g);
 
-       // game.getGraph();
+        graph.loadGraph(s);
+
+
+        game.getGraph();
 
     }
 }

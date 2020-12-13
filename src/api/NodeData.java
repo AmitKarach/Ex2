@@ -1,16 +1,20 @@
 package api;
 
+import com.google.gson.annotations.SerializedName;
+
 public class NodeData implements node_data {
     /**
      * Returns the key (id) associated with this node.
      *
      * @return
      */
+    @SerializedName(value = "id")
     private final int key;
     private int tag;
     private String info;
     private double wei;
-    private geo_location gl;
+    @SerializedName(value = "pos")
+    private GLocation gl;
 
 // TODO: Might Need this, Coontructor inc Location -
 //    public NodeData(geo_location location,int id) {
@@ -50,7 +54,7 @@ public class NodeData implements node_data {
      */
     @Override
     public void setLocation(geo_location p) {
-        gl = p;
+        gl =(GLocation) p;
     }
 
     @Override

@@ -3,9 +3,10 @@ package api;
 import java.io.*;
 import java.util.*;
 
-import api.*;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+
+import api.BoazGraph.BoazNode;
+import api.BoazGraph.BoazEdge;
 
 
 public class DWGraph_Algo implements dw_graph_algorithms {
@@ -133,9 +134,29 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     public boolean save(String file) {
         Gson gson = new Gson();
         try (FileWriter writer = new FileWriter(file)) {
-            gson.toJson(graph, writer);
+
+            BoazGraph b =new BoazGraph();
+            for (node_data n:graph.getV())
+            {
+                BoazNode newNode = new BoazNode();
+                newNode.id=n.getKey();
+                newNode.pos=n.getLocation().x()+","+ n.getLocation().y();
+                b.nodes =new ArrayList<>();
+                b.edges =new ArrayList<>();
+                b.nodes.add(newNode);
+                for (edge_data e:graph.getE(n.getKey()))
+                {
+                    BoazEdge newEdge =new BoazEdge();
+                    newEdge.src =e.getSrc();
+                    newEdge.dest =e.getDest();
+                    newEdge.w =e.getWeight();
+                    b.edges.add(newEdge);
+                }
+            }
+            gson.toJson(b, writer);
             writer.flush();
             writer.close();
+
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -158,16 +179,56 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
         Gson gson = new Gson();
 
-        try (Reader reader = new FileReader(file)) {
 
-            // Convert JSON File to Java Object
-            this.graph = gson.fromJson(file,  DWGraph_DS.class);
+        try (Reader reader = new FileReader(file)) {
+            BoazGraph g  = gson.fromJson(reader, BoazGraph.class);
+                // Convert JSON File to Java Object
+            for(BoazNode d : g.nodes)
+            {
+                NodeData nodeData = new NodeData(d.id);
+                String pos = d.pos;
+                String[] posSplit = pos.split(",");
+                GLocation loc = new GLocation(Double.parseDouble(posSplit[0]), Double.parseDouble(posSplit[1]));
+                nodeData.setLocation(loc);
+                graph.addNode(nodeData);
+            }
+            for (BoazEdge e : g.edges)
+            {
+                graph.connect(e.src, e.dest, e.w);
+            }
             return true;
 
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean loadGraph(String jsonGraph) {
+
+        Gson gson = new Gson();
+
+
+
+            BoazGraph g  = gson.fromJson(jsonGraph, BoazGraph.class);
+            // Convert JSON File to Java Object
+
+        for(BoazNode d : g.nodes)
+        {
+            NodeData nodeData = new NodeData(d.id);
+            String pos = d.pos;
+            String[] posSplit = pos.split(",");
+            GLocation loc = new GLocation(Double.parseDouble(posSplit[0]), Double.parseDouble(posSplit[1]));
+            nodeData.setLocation(loc);
+            graph.addNode(nodeData);
+        }
+        for (BoazEdge e : g.edges)
+        {
+            graph.connect(e.src, e.dest, e.w);
+        }
+            return true;
+
+
     }
 
     private void DJ(directed_weighted_graph g,node_data s)
