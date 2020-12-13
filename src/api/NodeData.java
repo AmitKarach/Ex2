@@ -1,30 +1,33 @@
 package api;
 
-public class NodeData implements node_data , Comparable{
+public class NodeData implements node_data {
     /**
      * Returns the key (id) associated with this node.
      *
      * @return
      */
-    private int id,tag;
+    private final int key;
+    private int tag;
     private String info;
     private double wei;
-    private geo_location pos;
+    private geo_location gl;
 
-    public NodeData(geo_location location,int id) { // Better Constructor
-        this.id = id;
-        this.setLocation(location);
-        this.setWeight(0);
-        this.setInfo("");
-        this.setTag(0);
+// TODO: Might Need this, Coontructor inc Location -
+//    public NodeData(geo_location location,int id) {
+//        this.key = id;
+//        this.setLocation(location);
+//        this.setWeight(0);
+//        this.setInfo("");
+//        this.setTag(0);
+//    }
+
+    public NodeData(int k) {
+        key = k;
     }
-    public NodeData(int k)
-    {
-        id= k;
-    }
+
     @Override
     public int getKey() {
-        return id;
+        return key;
     }
 
     /**
@@ -35,8 +38,8 @@ public class NodeData implements node_data , Comparable{
      */
     @Override
     public geo_location getLocation() {
-        if(pos !=null)
-            return pos;
+        if (gl != null)
+            return gl;
         return null;
     }
 
@@ -47,17 +50,17 @@ public class NodeData implements node_data , Comparable{
      */
     @Override
     public void setLocation(geo_location p) {
-        pos =p;
+        gl = p;
     }
 
     @Override
     public String toString() {
         return "NodeData{" +
-                "key=" + id +
+                "key=" + key +
                 ", tag=" + tag +
                 ", info='" + info + '\'' +
                 ", wei=" + wei +
-                ", gl=" + pos +
+                ", gl=" + gl +
                 '}';
     }
 
@@ -78,7 +81,7 @@ public class NodeData implements node_data , Comparable{
      */
     @Override
     public void setWeight(double w) {
-        wei=w;
+        wei = w;
     }
 
     /**
@@ -121,30 +124,6 @@ public class NodeData implements node_data , Comparable{
     @Override
     public void setTag(int t) {
         tag = t;
-    }
-
-    public static void main(String[] args){
-
-        NodeData n1 = new NodeData(1);
-        NodeData n2 = new NodeData(2);
-        NodeData n3 = new NodeData(3);
-        NodeData n4 = new NodeData(4);
-        n1.setWeight(45);
-        System.out.println(n1.toString());
-
-
-    }
-
-
-    @Override
-    public int compareTo(Object o)
-    {
-            node_data n = (node_data) o;
-            if (n.getTag()>tag)
-                return -1;
-            if (n.getTag()<tag)
-                return 1;
-            return 0;
     }
 
 }

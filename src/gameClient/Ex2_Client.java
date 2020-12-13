@@ -25,7 +25,7 @@ public class Ex2_Client implements Runnable{
 		int scenario_num = 1;
 		game_service game = Game_Server_Ex2.getServer(scenario_num); // you have [0,23] games
 	//	int id = 999;
-//		game.login(id);
+	//	game.login(id);
 		String g = game.getGraph();
 		String pks = game.getPokemons();
 		directed_weighted_graph gg = game.getJava_Graph_Not_to_be_used();
@@ -39,7 +39,7 @@ public class Ex2_Client implements Runnable{
 		while(game.isRunning()) {
 			moveAgants(game, gg);
 			try {
-				if(ind%3==0) {_win.repaint();}
+				if(ind%7==0) {_win.repaint();}
 				Thread.sleep(dt);
 				ind++;
 			}
@@ -110,8 +110,7 @@ public class Ex2_Client implements Runnable{
 		_win.update(_ar);
 
 	
-//		_win.show();
-		_win.setVisible(true);
+		_win.show();
 		String info = game.toString();
 		JSONObject line;
 		try {
