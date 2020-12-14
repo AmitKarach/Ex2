@@ -16,7 +16,7 @@ import java.util.List;
 public class Ex2 {
 
     public static void main(String[] args) throws JSONException {
-        int level_number = 0;
+        int level_number = 5;
         game_service game = Game_Server_Ex2.getServer(level_number);
 //        game.addAgent(6);
 //        String s = game.getGraph();
@@ -60,6 +60,20 @@ public class Ex2 {
             Arena.updateEdge(p, g);
         }
 
-        int x=10;
+//        int x=0;
+        for (int i=0; i< numAgents; i++)
+        {
+            CL_Pokemon currrntP =pokemons.remove(i);
+            if (currrntP.getType() ==-1)
+            {
+                game.addAgent(currrntP.get_edge().getDest());
+            }
+            if (currrntP.getType() ==1)
+            {
+                game.addAgent(currrntP.get_edge().getSrc());
+            }
+
+        }
+
     }
 }
