@@ -39,8 +39,12 @@ public class CL_Agent {
 				line = new JSONObject(json);
 				JSONObject ttt = line.getJSONObject("Agent");
 				int id = ttt.getInt("id");
-				if(id==this.getID() || this.getID() == -1) {
-					if(this.getID() == -1) {_id = id;}
+				if(id==this.getID() || this.getID() == -1)
+				{
+					if(this.getID() == -1)
+					{
+						_id = id;
+					}
 					double speed = ttt.getDouble("speed");
 					String p = ttt.getString("pos");
 					Point3D pp = new Point3D(p);
