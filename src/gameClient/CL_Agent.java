@@ -19,7 +19,7 @@ public class CL_Agent {
 		private directed_weighted_graph _gg;
 		private CL_Pokemon currentPokemon;
 		private long _sg_dt;
-		private ArrayList<NodeData> parents;
+		private ArrayList<node_data> parents;
 		private double _value;
 
 
@@ -121,13 +121,13 @@ public class CL_Agent {
 			return this._value;
 		}
 
-		public void setParents(ArrayList<NodeData> parents) {
+		public void setParents(ArrayList<node_data> parents) {
 		this.parents = parents;
 		}
 
 
 
-		public ArrayList<NodeData> getParents() {
+		public ArrayList<node_data> getParents() {
 		return parents;
 	}
 

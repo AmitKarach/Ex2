@@ -63,4 +63,11 @@ public class CL_Pokemon {
 	public void setMin_ro(int min_ro) {
 		this.min_ro = min_ro;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		CL_Pokemon n = (CL_Pokemon) obj;
+		if (n.getLocation() == _pos && n.getType() == _type && n.getValue() == _value)
+			return true;
+		return false;
+	}
 }
