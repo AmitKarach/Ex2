@@ -12,7 +12,12 @@ public class Range2D {
 		_x_range = new Range(x);
 		_y_range = new Range(y);
 	}
-	public Range2D(Range2D w) {
+	public Range2D(Range2D w)
+	{
+		if (w ==null)
+		{
+			return;
+		}
 		_x_range = new Range(w._x_range);
 		_y_range = new Range(w._y_range);
 	} 

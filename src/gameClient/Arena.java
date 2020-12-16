@@ -191,7 +191,12 @@ public class Arena {
         return isOnEdge(p, src, dest, g);
     }
 
-    private static Range2D GraphRange(directed_weighted_graph g) {
+    private static Range2D GraphRange(directed_weighted_graph g)
+    {
+        if (g==null)
+        {
+            return null;
+        }
         Iterator<node_data> itr = g.getV().iterator();
         double x0 = 0, x1 = 0, y0 = 0, y1 = 0;
         boolean first = true;

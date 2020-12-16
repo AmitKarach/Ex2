@@ -20,6 +20,7 @@ public class Ex2 implements Runnable {
     private static Arena _ar;
     private static DWGraph_Algo dwGraph;
     private static HashMap<Integer, CL_Pokemon> agentsPokemons;
+//    private static int cheakForRepet=0;
 
     public static void main(String[] a) {
         Thread client = new Thread(new Ex2());
@@ -27,8 +28,9 @@ public class Ex2 implements Runnable {
     }
 
 
-    public void run() {
-        int level_number = 10;
+    public void run()
+    {
+        int level_number = 11;
         game_service game = Game_Server_Ex2.getServer(level_number);
 
         DWGraph_DS g = new DWGraph_DS();
@@ -42,17 +44,34 @@ public class Ex2 implements Runnable {
             game.startGame();
             _win.setTitle("Ex2 - OOP: (NONE trivial Solution) " + game.toString());
 
-            int ind = 0;
-
+//            int ind = 0;
+//            for (int i = 0; i <_ar.getAgents().size() ; i++)
+//            {
+//                   Thread agents = new AgentT(i, game, _ar, jp);
+//                   agents.start();
+//            }
 
             while (game.isRunning()) {
-
+                int ind = 0;
                 moveAgants(game, g);
                 long dt = 150;
+//                if (cheakForRepet ==2)
+//                {
+//                    dt =50;
+//                    cheakForRepet=0;
+//                }
                 for (int i = 0; i < _ar.getAgents().size(); i++) {
                     if (_ar.getAgents().get(i).getSrcNode() == agentsPokemons.get(i).get_edge().getSrc()) {
                         dt = 85;
                     }
+//                        if (_ar.getAgents().get(i).get_curr_edge() != null)
+//                        {
+//                            System.out.println((long)((_ar.getAgents().get(i).get_curr_edge().getWeight()*1000)/_ar.getAgents().get(i).getSpeed()));
+//                        }
+//                    if (_ar.getAgents().get(i).get_curr_edge().getWeight()*1000)
+//                    {
+//
+//                    }
                 }
                 try {
                     if (ind % 1 == 0) {
@@ -133,6 +152,10 @@ public class Ex2 implements Runnable {
             double v = ag.getValue();
             if (dest == -1) {
                 dest = nextNode(game, graph, ag);
+//                if (dest == ag.get_curr_edge().getSrc() )
+//                {
+//                    cheakForRepet++;
+//                }
                 game.chooseNextEdge(ag.getID(), dest);
                 System.out.println("Agent: " + id + ", val: " + v + "   turned to node: " + dest);
 

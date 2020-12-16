@@ -110,6 +110,7 @@ public class JPanal extends JPanel
 
                 geo_location fp = this._w2f.world2frame(c);
                 g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
+//                g.drawString(""+rs.get(i-1).get_curr_edge().getDest() ,(int)fp.x()-r, (int)fp.y()-r+25);
             }
         }
     }
