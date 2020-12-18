@@ -12,7 +12,7 @@ import java.util.List;
 public class AgentT extends Thread {
     private int id;
     private game_service game;
-    private Arena _ar;
+    private static Arena _ar;
     private JPanal jp;
     private static DWGraph_Algo algo;
     private directed_weighted_graph g;
@@ -55,7 +55,7 @@ public class AgentT extends Thread {
             int ind = 0;
             long destnitionTime = 150;
 
-            if (_ar.getAgents().get(id).getSrcNode() ==getPokemonTakenList(id).get_edge().getSrc()) {
+            if (_ar.getAgents().get(id).getSrcNode() == getPokemonTakenList(id).get_edge().getSrc()) {
                 destnitionTime = 85;
             }
 //                if (_ar.getAgents().get(i).get_curr_edge() != null) {
@@ -110,26 +110,52 @@ public class AgentT extends Thread {
             Arena.updateEdge(p, g);
         }
         double closestD = algo.shortestPathDist(src, pokemons.get(0).get_edge().getSrc());
-        ;
         CL_Pokemon closestP = pokemons.get(0);
-        boolean t = true;
-        for (int i = 1; i < pokemons.size(); i++)
-        {
-            for (int k = 0; k < pokemonsTaken.length; k++)
-            {if (getPokemonTakenList(k) !=null) {
-                if (getPokemonTakenList(k).equals(pokemons.get(i)) == true) {
-                    t = false;
+//        boolean t = true;
+//        for (int i = 1; i < pokemons.size(); i++)
+//        {
+//            for (int k = 0; k < pokemonsTaken.length; k++)
+//            {if (getPokemonTakenList(k) !=null) {
+//                if (getPokemonTakenList(k).equals(pokemons.get(i)) == true) {
+//                    t = false;
+//                }
+//            }
+//            }
+//            if (t == true) {
+//                double currentD = algo.shortestPathDist(src, pokemons.get(i).get_edge().getSrc());
+//                if (closestD > currentD) {
+//                    closestD = currentD;
+//                    closestP = pokemons.get(i);
+//                }
+//            }
+//        }
+        List<CL_Pokemon> removeP = new ArrayList<>();
+        for (int i = 0; i < pokemons.size(); i++) {
+            for (int k = 0; k < pokemonsTaken.length - 1; k++) {
+                if (k == ag.getID()) {
+                    k++;
                 }
-            }
-            }
-            if (t == true) {
-                double currentD = algo.shortestPathDist(src, pokemons.get(i).get_edge().getSrc());
-                if (closestD > currentD) {
-                    closestD = currentD;
-                    closestP = pokemons.get(i);
+                if (getPokemonTakenList(k) != null) {
+                    if (pokemonsTaken[k].equals(pokemons.get(i)) == true) {
+                        if (algo.shortestPathDist(_ar.getAgents().get(ag.getID()).getSrcNode(), pokemons.get(i).get_edge().getSrc()) < algo.shortestPathDist(_ar.getAgents().get(k).getSrcNode(), pokemons.get(i).get_edge().getSrc())) {
+                            removeP.add(pokemons.get(i));
+                        }
+                    }
                 }
             }
         }
+        for (int i = 0; i < removeP.size(); i++) {
+            pokemons.remove(removeP.get(i));
+        }
+
+        for (int i = 0; i < pokemons.size(); i++) {
+            double currentD = algo.shortestPathDist(src, pokemons.get(i).get_edge().getSrc());
+            if (closestD > currentD) {
+                closestD = currentD;
+                closestP = pokemons.get(i);
+            }
+        }
+
         setPokemonTakenList(ag.getID(), closestP);
 
         if (src == getPokemonTakenList(ag.getID()).get_edge().getSrc()) {
@@ -140,8 +166,7 @@ public class AgentT extends Thread {
         }
     }
 
-    private static synchronized void setPokemonTakenList(int id, CL_Pokemon pikatcu)
-    {
+    private static synchronized void setPokemonTakenList(int id, CL_Pokemon pikatcu) {
         pokemonsTaken[id] = pikatcu;
     }
 

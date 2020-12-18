@@ -66,8 +66,9 @@ public class CL_Pokemon {
 	@Override
 	public boolean equals(Object obj) {
 		CL_Pokemon n = (CL_Pokemon) obj;
-		if (n.getLocation() == _pos && n.getType() == _type && n.getValue() == _value)
+		if (n.get_edge().equals(_edge)== true && n.getType() == _type && n.getValue() == _value)
 			return true;
 		return false;
 	}
+//	&& n.getType() == _type && n.getValue() == _value
 }

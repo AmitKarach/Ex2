@@ -101,6 +101,10 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
     @Override
     public double shortestPathDist(int src, int dest) {
+        if (graph.getNode(src)==null || graph.getNode(dest) == null)
+        {
+            return -1;
+        }
         if (src==dest)
         {
             return 0;
@@ -206,7 +210,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return true;
     }
 
-    public boolean loadGraph(String jsonGraph) {
+    public synchronized boolean loadGraph(String jsonGraph) {
 
         Gson gson = new Gson();
 

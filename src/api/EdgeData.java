@@ -7,7 +7,7 @@ public class EdgeData implements edge_data {
     @SerializedName(value = "src")
     private int src;
     @SerializedName(value = "dest")
-    private int des;
+    private int dest;
     private int tag;
     @SerializedName(value = "w")
     private double weight;
@@ -21,7 +21,7 @@ public class EdgeData implements edge_data {
     public EdgeData (int s, int d, double w)
     {
         src= s;
-        des=d;
+        dest =d;
         weight=w;
     }
     /**
@@ -41,7 +41,7 @@ public class EdgeData implements edge_data {
      */
     @Override
     public int getDest() {
-        return des;
+        return dest;
     }
 
     /**
@@ -94,5 +94,13 @@ public class EdgeData implements edge_data {
     public void setTag(int t)
     {
         tag=t;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        EdgeData n = (EdgeData) obj;
+        if (n.getDest() == dest && n.getSrc() == src)
+            return true;
+        return false;
     }
 }
