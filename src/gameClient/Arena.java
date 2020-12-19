@@ -167,7 +167,7 @@ public class Arena {
         boolean ans = false;
         double dist = src.distance(dest);
         double d1 = src.distance(p) + p.distance(dest);
-        if (dist > d1 - EPS2) {
+        if (dist > d1 - EPS2*EPS2) {
             ans = true;
         }
         return ans;

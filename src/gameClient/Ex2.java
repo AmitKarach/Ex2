@@ -6,12 +6,14 @@ import gameClient.Arena;
 import com.google.gson.Gson;
 import gameClient.util.JPanal;
 import gameClient.util.JavaFram;
+import gameClient.util.Javi;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.*;
 
 public class Ex2 implements Runnable {
+    private static Javi _aviWindow;
     private static JavaFram _win;
     private static JPanal jp;
     private static Arena _ar;
@@ -20,14 +22,23 @@ public class Ex2 implements Runnable {
     private static int cheakForRepet = 0;
 
     public static void main(String[] a) {
-        Thread client = new Thread(new Ex2());
-        client.start();
+        _aviWindow = new Javi();
     }
 
 
     public void run() {
-        int level_number = 23;
+        while (true)
+        {
+            if (!_aviWindow.isActive())
+            {
+                break;
+            }
+        }
+        int level_number = _aviWindow.getlevel();
+
         game_service game = Game_Server_Ex2.getServer(level_number);
+        long id = _aviWindow.getId();
+        game.login(id);
 
         DWGraph_DS g = new DWGraph_DS();
         dwGraph = new DWGraph_Algo();
@@ -105,7 +116,7 @@ public class Ex2 implements Runnable {
         _ar = new Arena();
         _ar.setPokemons(Arena.json2Pokemons(game.getPokemons()));
         _win = new JavaFram("test Ex2");
-        jp = new JPanal();
+        jp = new JPanal(game);
         _ar.setGraph(g);
         _win.add(jp);
         jp.update(_ar);

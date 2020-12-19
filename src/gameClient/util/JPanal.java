@@ -1,9 +1,6 @@
 package gameClient.util;
 
-import api.directed_weighted_graph;
-import api.edge_data;
-import api.geo_location;
-import api.node_data;
+import api.*;
 import gameClient.Arena;
 import gameClient.CL_Agent;
 import gameClient.CL_Pokemon;
@@ -17,12 +14,14 @@ public class JPanal extends JPanel
 {
     private Arena _ar;
     private gameClient.util.Range2Range _w2f;
+    private game_service game;
 
 
-    public JPanal ()
+    public JPanal (game_service game)
     {
         super();
         _ar =new Arena();
+        this.game =game;
         this.setBackground(Color.white);
     }
 
@@ -48,6 +47,7 @@ public class JPanal extends JPanel
         drawGraph(g);
         drawAgants(g);
         drawInfo(g);
+        drawTime (g, game);
 
     }
     private void drawInfo(Graphics g) {
@@ -102,15 +102,24 @@ public class JPanal extends JPanel
         //	Iterator<OOP_Point3D> itr = rs.iterator();
         g.setColor(Color.red);
         int i=0;
+        int k=0;
+        int j= 20;
+        CL_Agent temp;
         while(rs!=null && i<rs.size()) {
             geo_location c = rs.get(i).getLocation();
+            temp = rs.get(k);
+
             int r=8;
             i++;
             if(c!=null) {
-
                 geo_location fp = this._w2f.world2frame(c);
+                g.setColor(Color.red);
                 g.fillOval((int)fp.x()-r, (int)fp.y()-r, 2*r, 2*r);
-//                g.drawString(""+rs.get(i-1).get_curr_edge().getDest() ,(int)fp.x()-r, (int)fp.y()-r+25);
+                g.drawString(""+ temp.getID() ,(int) fp.x()-r, (int)fp.y()-r);
+                g.setColor(Color.blue);
+                g.drawString("agent id: "+ temp.getID()+" agent value: "+temp.getValue(), 20, j );
+                j+=20;
+                k++;
             }
         }
     }
@@ -128,6 +137,15 @@ public class JPanal extends JPanel
         geo_location d0 = this._w2f.world2frame(d);
         g.drawLine((int)s0.x(), (int)s0.y(), (int)d0.x(), (int)d0.y());
         //	g.drawString(""+n.getKey(), fp.ix(), fp.iy()-4*r);
+    }
+
+    private void drawTime (Graphics g ,game_service game)
+    {
+        if (game != null) {
+            String time = String.valueOf(game.timeToEnd());
+            g.drawString("time to end: " + time, 500, 20);
+            g.setColor(Color.blue);
+        }
     }
 }
 
