@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * this is our game:)
  */
-public class Ex2 implements Runnable {
+public class Ex2 extends Thread implements Runnable {
     private static Javi _aviWindow;
     private static JavaFram _win;
     private static JPanal jp;
@@ -23,26 +23,51 @@ public class Ex2 implements Runnable {
     private static DWGraph_Algo dwGraph;
     private static HashMap<Integer, CL_Pokemon> agentsPokemons;
     private static int cheakForRepet = 0;
+    private static boolean b;
+    private static int gameLevel;
+    private static long id;
 
     public static void main(String[] a) {
-        _aviWindow = new Javi();
-    }
-
-
-    public void run() {
-        while (true)
-        {
-            if (!_aviWindow.isActive())
-            {
-                break;
-            }
+        if (a.length == 0) {
+            _aviWindow = new Javi();
+            b=true;
         }
-        int level_number = _aviWindow.getlevel();
+        else
+        {
+            int gameLevel = Integer.parseInt(a[1]);
+            long id = Long.parseLong(a[0]);
+            Thread ex2Thread = new Ex2(gameLevel, id);
+            ex2Thread.start();
+            b=false;
+        }
+    }
+    public Ex2 (){}
 
-        game_service game = Game_Server_Ex2.getServer(level_number);
-        long id = _aviWindow.getId();
-        game.login(id);
+    public Ex2 (int gameLevel, long id){
+        this.gameLevel =gameLevel;
+        this.id =id;
+    }
+    public void run()
+    {
+        game_service game;
 
+        if (b==true)
+        {
+            while (true) {
+                if (!_aviWindow.isActive()) {
+                    break;
+                }
+            }
+            int level_number = _aviWindow.getlevel();
+            game = Game_Server_Ex2.getServer(level_number);
+            long id = _aviWindow.getId();
+            game.login(id);
+        }
+        else
+        {
+            game = Game_Server_Ex2.getServer(gameLevel);
+            game.login(id);
+        }
         DWGraph_DS g = new DWGraph_DS();
         dwGraph = new DWGraph_Algo();
         agentsPokemons = new HashMap<>();
@@ -189,8 +214,9 @@ public class Ex2 implements Runnable {
                 if (dest == src)
                 {
                     cheakForRepet++;
-                }                game.chooseNextEdge(ag.getID(), dest);
-                System.out.println("Agent: " + id + ", val: " + v + "   turned to node: " + dest);
+                }
+                game.chooseNextEdge(ag.getID(), dest);
+//                System.out.println("Agent: " + id + ", val: " + v + "   turned to node: " + dest);
 
             }
         }

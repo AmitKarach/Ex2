@@ -67,7 +67,7 @@ public class Javi extends JFrame implements ActionListener {
 
         }
 
-        Thread ex2Thread = new Thread(new Ex2());
+        Thread ex2Thread = new Ex2();
         ex2Thread.start();
     }
 
