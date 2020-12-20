@@ -165,6 +165,40 @@ public boolean load(String file); -      * This method load a graph to this grap
 
 
 
+Part 2 - Ex2 - 
+About the game - The game consists of 24 level(0-23) The main goal of the game is to eat as many pokemons given a specific number of Agents within the time limit.
+
+I control the Agents Via a given class named game_service that is implemented on the server.
+
+public interface game_service extends Serializable{	
+
+public String getGraph(); -  Returns a JSON representation of graph as a JSON String.
+
+default directed_weighted_graph getJava_Graph_Not_to_be_used() - Returns an interface to the graph (should NOT be used) for final version - for testing only.
+
+public String getPokemons(); - Returns a JSON string, representing all Pokemons
+
+public String getAgents(); - Returns a JSON string, representing all the Agents
+
+public boolean addAgent(int start_node); - This method allows the user to add & locate the agents,
+
+public long startGame(); - Start a new game
+
+public boolean isRunning(); - Returns the current status of the game
+
+public long stopGame(); - Stops the game
+
+public long chooseNextEdge(int id, int next_node); - allows the client algorithm to direct each agent to the "next" edge
+
+public long timeToEnd(); - return the number of mili-seconds till the game is over
+
+public String move(); - moves all the agents along each edge
+
+public boolean login(long id); -Performs a login - so the results of the game will be stored in the data-base after the game 
+
+
+
+
 
 
 
