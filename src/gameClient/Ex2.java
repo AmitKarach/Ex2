@@ -2,6 +2,7 @@ package gameClient;
 
 import Server.Game_Server_Ex2;
 import api.*;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import gameClient.Arena;
 import com.google.gson.Gson;
 import gameClient.util.JPanal;
@@ -64,9 +65,10 @@ public class Ex2 implements Runnable {
 
                 for (int i = 0; i < _ar.getAgents().size(); i++)
                 {
-                    if (_ar.getAgents().get(i).getSrcNode() == agentsPokemons.get(i).get_edge().getSrc())
-                    {
-                        dt = 85;
+                    if (agentsPokemons.get(i) !=null) {
+                        if (_ar.getAgents().get(i).getSrcNode() == agentsPokemons.get(i).get_edge().getSrc()) {
+                            dt = 85;
+                        }
                     }
                 }
 //                        if (_ar.getAgents().get(i).get_curr_edge() != null)
@@ -120,8 +122,8 @@ public class Ex2 implements Runnable {
         _ar.setGraph(g);
         _win.add(jp);
         jp.update(_ar);
-        //gets number of agents
 
+        //gets number of agents
         JSONObject gameString = new JSONObject(game.toString());
         JSONObject server = gameString.getJSONObject("GameServer");
         int numAgents = server.getInt("agents");
@@ -176,6 +178,46 @@ public class Ex2 implements Runnable {
                 {
                     cheakForRepet++;
                 }
+//                pokemons = Arena.json2Pokemons(game.getPokemons());
+//                for (CL_Pokemon p : pokemons) {
+//                    Arena.updateEdge(p, graph);
+//                }
+//
+//                for (int j = 0; j <pokemons.size() ; j++) {
+//                    for (int k = 0; k < agentsPokemons.size(); k++) {
+//                        if (k == ag.getID()) {
+//                            k++;
+//                        }
+//                        if (agentsPokemons.get(k) !=null) {
+//                            if (agentsPokemons.get(k).equals(pokemons.get(j))) {
+//                                if (dwGraph.shortestPathDist(agentsLocation.get(k).getSrcNode(), pokemons.get(j).get_edge().getSrc()) >= dwGraph.shortestPathDist(ag.getSrcNode(), pokemons.get(j).get_edge().getSrc())) {
+//                                    pokemons.remove(j);
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                double closestD = dwGraph.shortestPathDist(src, pokemons.get(0).get_edge().getSrc());
+//                CL_Pokemon closestP = pokemons.get(0);
+//
+//                for (int j = 0; j < pokemons.size(); j++)
+//                {
+//                    if (dwGraph.shortestPathDist(ag.getSrcNode() , pokemons.get(j).get_edge().getSrc()) < closestD)
+//                    {
+//                        closestD =dwGraph.shortestPathDist(ag.getSrcNode() , pokemons.get(j).get_edge().getSrc());
+//                        closestP =pokemons.get(j);
+//                    }
+//                }
+//                agentsPokemons.replace(ag.getID(), closestP);
+//                if (ag.getSrcNode() == closestP.get_edge().getSrc())
+//                {
+//                    dest = closestP.get_edge().getDest();
+//                }
+//                else
+//                {
+//                    List<node_data> shorti = dwGraph.shortestPath(ag.getSrcNode(), closestP.get_edge().getSrc());
+//                    dest = shorti.get(1).getKey();
+//                }
                 game.chooseNextEdge(ag.getID(), dest);
                 System.out.println("Agent: " + id + ", val: " + v + "   turned to node: " + dest);
 
@@ -203,11 +245,11 @@ public class Ex2 implements Runnable {
                 {
                     k++;
                 }
-                if (agentsPokemons.get(k).equals(pokemons.get(i)) == true)
-                {
-                    if (dwGraph.shortestPathDist(_ar.getAgents().get(ag.getID()).getSrcNode() , pokemons.get(i).get_edge().getSrc()) < dwGraph.shortestPathDist(_ar.getAgents().get(k).getSrcNode() , pokemons.get(i).get_edge().getSrc()))
-                    {
-                        removeP.add(pokemons.get(i));
+                if (agentsPokemons.get(k) !=null) {
+                    if (agentsPokemons.get(k).equals(pokemons.get(i)) == true) {
+                        if (dwGraph.shortestPathDist(_ar.getAgents().get(ag.getID()).getSrcNode(), pokemons.get(i).get_edge().getSrc()) < dwGraph.shortestPathDist(_ar.getAgents().get(k).getSrcNode(), pokemons.get(i).get_edge().getSrc())) {
+                            removeP.add(pokemons.get(i));
+                        }
                     }
                 }
             }
@@ -224,6 +266,17 @@ public class Ex2 implements Runnable {
             if (closestD > currentD) {
                 closestD = currentD;
                 closestP = pokemons.get(i);
+            }
+        }
+        for (int i = 0; i < agentsPokemons.size(); i++)
+        {
+            if (i == ag.getID()){
+                i++;
+            }
+            if (agentsPokemons.get(i)!=null) {
+                if (agentsPokemons.get(i).equals(closestP)) {
+                    agentsPokemons.replace(i, null);
+                }
             }
         }
         agentsPokemons.put(ag.getID(), closestP);

@@ -11,8 +11,8 @@ import api.BoazGraph.BoazNode;
 
 public class DWGraph_Algo implements dw_graph_algorithms {
     directed_weighted_graph graph;
-    ArrayList<Double> wieghts =new ArrayList<Double>();
-    ArrayList<node_data> parents =new ArrayList<node_data>();
+    ArrayList<Double> wieghts= new ArrayList<>();
+    ArrayList<node_data> parents = new ArrayList<>();
     public DWGraph_Algo ()
     {
         graph = new DWGraph_DS();
@@ -70,6 +70,8 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 //            return true;
 //        }
 //        return false;
+//        wieghts = setWieghts();
+//        parents = setParents();
         if (graph.getV()==null ||graph.getV().size()==0 || graph.getV().size()==1)
         {
             return true;
@@ -100,7 +102,10 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     }
 
     @Override
-    public double shortestPathDist(int src, int dest) {
+    public double shortestPathDist(int src, int dest)
+    {
+//        wieghts = setWieghts();
+//        parents = setParents();
         if (graph.getNode(src)==null || graph.getNode(dest) == null)
         {
             return -1;
@@ -115,7 +120,10 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     }
 
     @Override
-    public List<node_data> shortestPath(int src, int dest) {
+    public List<node_data> shortestPath(int src, int dest)
+    {
+//        wieghts = setWieghts();
+//        parents = setParents();
         if (graph.getNode(src)==null ||graph.getNode(dest)==null)
         {
             return null;
@@ -227,6 +235,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     private void DJ(directed_weighted_graph g,node_data s)
     {
         wieghts.clear();
+        parents.clear();
         Iterator<node_data> nodes = g.getV().iterator();
         while (nodes.hasNext())
         {
@@ -253,6 +262,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
                     if (dis < wieghts.get(ni.getKey()) && ni.getInfo() == "unvisited")
                     {
                         wieghts.set(ni.getKey(), dis);
+                        ni.setWeight(dis);
                         parents.set(ni.getKey(),current);
                         queue.add(ni);
                     }
@@ -278,7 +288,7 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return newGraph;
     }
 
-    public List<node_data> shortestPath(node_data dest)
+    private List<node_data> shortestPath(node_data dest)
     {
 
         List <node_data> shorti = new LinkedList<>();
@@ -294,10 +304,26 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         }
         return shorti;
     }
-
-    public ArrayList<node_data> getParents() {
-        return parents;
-    }
+//
+//    private ArrayList<Double> setWieghts ()
+//    {
+//        ArrayList<Double> w = new ArrayList<>();
+//        for (int i = 0; i < graph.getV().size(); i++)
+//        {
+//            w.add(i, Double.MAX_VALUE);
+//        }
+//        return w;
+//    }
+//
+//    private ArrayList<node_data> setParents ()
+//    {
+//        ArrayList<node_data> p = new ArrayList<>();
+//        for (int i = 0; i < graph.getV().size(); i++)
+//        {
+//            p.add(i, null);
+//        }
+//        return p;
+//    }
 
 
 }

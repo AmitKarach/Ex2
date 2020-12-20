@@ -2,7 +2,7 @@ package api;
 
 import com.google.gson.annotations.SerializedName;
 
-public class NodeData implements node_data, Comparable{
+public class NodeData implements node_data ,Comparable{
     /**
      * Returns the key (id) associated with this node.
      *
@@ -130,14 +130,47 @@ public class NodeData implements node_data, Comparable{
         tag = t;
     }
     @Override
-    public int compareTo(Object o)
-    {
-        node_data n = (node_data) o;
-        if (n.getTag()>tag)
-            return -1;
-        if (n.getTag()<tag)
-            return 1;
-        return 0;
-    }
+        public int compareTo(Object o)
+        {
+            node_data n = (node_data) o;
+            if (n.getWeight()>wei)
+                return -1;
+            if (n.getWeight()<wei)
+                return 1;
+            return 0;
+        }
+
+
+//    public class NodeExtended extends NodeData implements
+//    {
+//        private int id;
+//        private double weightOfNode;
+//
+//        public NodeExtended(int k) {
+//            super(k);
+//            id =k;
+//        }
+//
+//        public double getWeightOfNode() {
+//            return weightOfNode;
+//        }
+//
+//        public void setWeightOfNode( double w) {
+//            weightOfNode =w;
+//        }
+//
+//        @Override
+//        public int compareTo(Object o)
+//        {
+//            node_data n = (node_data) o;
+//            if (n.getWeight()>weightOfNode)
+//                return -1;
+//            if (n.getWeight()<weightOfNode)
+//                return 1;
+//            return 0;
+//        }
+//
+//
+//    }
 
 }
