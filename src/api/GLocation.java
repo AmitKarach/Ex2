@@ -2,7 +2,15 @@ package api;
 import java.lang.Math;
 
 public class GLocation implements geo_location {
-    // TODO - Understand why this is needed and write accordingly - FIX.
+    @Override
+    public String toString() {
+        return "GLocation{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
+
     private double x,y,z;
     public GLocation(double newx,double newy,double newz)
     {

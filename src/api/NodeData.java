@@ -28,6 +28,21 @@ public class NodeData implements node_data ,Comparable{
     public NodeData(int k) {
         key = k;
     }
+    public NodeData(int k,double weight,GLocation location) {
+        key = k;
+        wei=weight;
+        gl=location;
+    }
+    public NodeData(int k,double weight,GLocation location,int ta) {
+        key = k;
+        wei=weight;
+        gl=location;
+        tag=ta;
+    }
+    public NodeData(int k,double weight) {
+        key = k;
+        wei=weight;
+    }
 
     @Override
     public int getKey() {
@@ -140,37 +155,5 @@ public class NodeData implements node_data ,Comparable{
             return 0;
         }
 
-
-//    public class NodeExtended extends NodeData implements
-//    {
-//        private int id;
-//        private double weightOfNode;
-//
-//        public NodeExtended(int k) {
-//            super(k);
-//            id =k;
-//        }
-//
-//        public double getWeightOfNode() {
-//            return weightOfNode;
-//        }
-//
-//        public void setWeightOfNode( double w) {
-//            weightOfNode =w;
-//        }
-//
-//        @Override
-//        public int compareTo(Object o)
-//        {
-//            node_data n = (node_data) o;
-//            if (n.getWeight()>weightOfNode)
-//                return -1;
-//            if (n.getWeight()<weightOfNode)
-//                return 1;
-//            return 0;
-//        }
-//
-//
-//    }
 
 }
