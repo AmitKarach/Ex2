@@ -177,48 +177,7 @@ public class Ex2 implements Runnable {
                 if (dest == src)
                 {
                     cheakForRepet++;
-                }
-//                pokemons = Arena.json2Pokemons(game.getPokemons());
-//                for (CL_Pokemon p : pokemons) {
-//                    Arena.updateEdge(p, graph);
-//                }
-//
-//                for (int j = 0; j <pokemons.size() ; j++) {
-//                    for (int k = 0; k < agentsPokemons.size(); k++) {
-//                        if (k == ag.getID()) {
-//                            k++;
-//                        }
-//                        if (agentsPokemons.get(k) !=null) {
-//                            if (agentsPokemons.get(k).equals(pokemons.get(j))) {
-//                                if (dwGraph.shortestPathDist(agentsLocation.get(k).getSrcNode(), pokemons.get(j).get_edge().getSrc()) >= dwGraph.shortestPathDist(ag.getSrcNode(), pokemons.get(j).get_edge().getSrc())) {
-//                                    pokemons.remove(j);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                double closestD = dwGraph.shortestPathDist(src, pokemons.get(0).get_edge().getSrc());
-//                CL_Pokemon closestP = pokemons.get(0);
-//
-//                for (int j = 0; j < pokemons.size(); j++)
-//                {
-//                    if (dwGraph.shortestPathDist(ag.getSrcNode() , pokemons.get(j).get_edge().getSrc()) < closestD)
-//                    {
-//                        closestD =dwGraph.shortestPathDist(ag.getSrcNode() , pokemons.get(j).get_edge().getSrc());
-//                        closestP =pokemons.get(j);
-//                    }
-//                }
-//                agentsPokemons.replace(ag.getID(), closestP);
-//                if (ag.getSrcNode() == closestP.get_edge().getSrc())
-//                {
-//                    dest = closestP.get_edge().getDest();
-//                }
-//                else
-//                {
-//                    List<node_data> shorti = dwGraph.shortestPath(ag.getSrcNode(), closestP.get_edge().getSrc());
-//                    dest = shorti.get(1).getKey();
-//                }
-                game.chooseNextEdge(ag.getID(), dest);
+                }                game.chooseNextEdge(ag.getID(), dest);
                 System.out.println("Agent: " + id + ", val: " + v + "   turned to node: " + dest);
 
             }
@@ -234,10 +193,11 @@ public class Ex2 implements Runnable {
         for (CL_Pokemon p : pokemons) {
             Arena.updateEdge(p, g);
         }
-        double closestD = dwGraph.shortestPathDist(src, pokemons.get(0).get_edge().getSrc());
-        CL_Pokemon closestP = pokemons.get(0);
+
         List<CL_Pokemon> removeP =new ArrayList<>();
-        for (int i = 0; i < pokemons.size(); i++)
+
+
+        for (int i = 0; i < pokemons.size()-1; i++)
         {
             for (int k = 0; k < agentsPokemons.size()-1; k++)
             {
@@ -245,38 +205,37 @@ public class Ex2 implements Runnable {
                 {
                     k++;
                 }
-                if (agentsPokemons.get(k) !=null) {
-                    if (agentsPokemons.get(k).equals(pokemons.get(i)) == true) {
-                        if (dwGraph.shortestPathDist(_ar.getAgents().get(ag.getID()).getSrcNode(), pokemons.get(i).get_edge().getSrc()) < dwGraph.shortestPathDist(_ar.getAgents().get(k).getSrcNode(), pokemons.get(i).get_edge().getSrc())) {
-                            removeP.add(pokemons.get(i));
-                        }
+
+                if (_ar.getAgents().get(k).getNextNode() == -1)
+                {
+                    if (dwGraph.shortestPathDist(_ar.getAgents().get(k).getSrcNode() , pokemons.get(i).get_edge().getSrc()) <= dwGraph.shortestPathDist(ag.getSrcNode() , pokemons.get(i).get_edge().getSrc()) ){
+                        removeP.add(pokemons.remove(i));
+                    }
+                }
+                if (_ar.getAgents().get(k).getNextNode() != -1)
+                {
+                    if (dwGraph.shortestPathDist(_ar.getAgents().get(k).getNextNode() , pokemons.get(i).get_edge().getSrc()) <= dwGraph.shortestPathDist(ag.getSrcNode() , pokemons.get(i).get_edge().getSrc()) ){
+                        removeP.add(pokemons.remove(i));
                     }
                 }
             }
         }
+
         for (int i = 0; i < removeP.size(); i++)
         {
             pokemons.remove(removeP.get(i));
-            agentsPokemons.remove(removeP.get(i));
         }
 
+
+        double closestD = dwGraph.shortestPathDist(src, pokemons.get(0).get_edge().getSrc());
+        CL_Pokemon closestP = pokemons.get(0);
         for (int i = 0; i < pokemons.size(); i++)
         {
-            double currentD = dwGraph.shortestPathDist(src, pokemons.get(i).get_edge().getSrc());
-            if (closestD > currentD) {
+            double currentD = dwGraph.shortestPathDist(ag.getSrcNode(), pokemons.get(i).get_edge().getSrc());
+            if (closestD > currentD)
+            {
                 closestD = currentD;
                 closestP = pokemons.get(i);
-            }
-        }
-        for (int i = 0; i < agentsPokemons.size(); i++)
-        {
-            if (i == ag.getID()){
-                i++;
-            }
-            if (agentsPokemons.get(i)!=null) {
-                if (agentsPokemons.get(i).equals(closestP)) {
-                    agentsPokemons.replace(i, null);
-                }
             }
         }
         agentsPokemons.put(ag.getID(), closestP);
