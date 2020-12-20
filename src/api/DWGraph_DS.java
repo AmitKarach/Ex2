@@ -77,7 +77,7 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
      */
     @Override
     public void connect(int src, int dest, double w) {
-        if (src == dest||Vertices.get(src)==null||Vertices.get(dest)==null) {
+        if (src == dest) {
             return;
         }
         if (Edges.get(src) != null) {
@@ -199,7 +199,7 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
      */
     @Override
     public int edgeSize() { // every edge is an obj so might be smart to just count edge node...
-        return Edges.size();
+        return edgesCounter;
     }
 
     /**

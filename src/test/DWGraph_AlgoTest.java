@@ -72,7 +72,6 @@ class DWGraph_AlgoTest {
     }
 
 
-
     private DWGraph_DS accurateGraph () {
         DWGraph_DS graph = new DWGraph_DS();
         for (int i = 0; i < 5; i++) {
@@ -84,7 +83,7 @@ class DWGraph_AlgoTest {
         graph.connect(1, 4, 1);
         graph.connect(2, 3, 30);
         graph.connect(3, 0, 5);
-        graph.connect(4, 3, 6);
+//        graph.connect(4, 3, 6);
 
 
         return graph;
