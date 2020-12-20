@@ -6,21 +6,21 @@ import java.util.*;
 import com.google.gson.Gson;
 
 import api.BoazGraph.BoazNode;
-//import api.BoazGraph.BoazEdge;
+
 
 
 public class DWGraph_Algo implements dw_graph_algorithms {
     directed_weighted_graph graph;
-    ArrayList<Double> wieghts= new ArrayList<>();
+    ArrayList<Double> wieghts = new ArrayList<>();
     ArrayList<node_data> parents = new ArrayList<>();
-    public DWGraph_Algo ()
-    {
+
+    public DWGraph_Algo() {
         graph = new DWGraph_DS();
     }
 
     @Override
     public void init(directed_weighted_graph g) {
-        graph=g;
+        graph = g;
     }
 
     @Override
@@ -30,70 +30,39 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
     @Override
     public directed_weighted_graph copy() {
-        DWGraph_DS newGraph =new DWGraph_DS();
-        for (node_data n: graph.getV())
-        {
+        DWGraph_DS newGraph = new DWGraph_DS();
+        for (node_data n : graph.getV()) {
             newGraph.addNode(n);
         }
-        for (node_data n: graph.getV())//going through all the nodes in the graph
+        for (node_data n : graph.getV())//going through all the nodes in the graph
         {
-            for (edge_data ni: graph.getE(n.getKey()))//going through all the neighbors of the node
+            for (edge_data ni : graph.getE(n.getKey()))//going through all the neighbors of the node
             {
                 graph.connect(ni.getSrc(), ni.getDest(), ni.getWeight());
             }
         }
+
         return newGraph;
     }
 
     @Override
-    public boolean isConnected()
-    {
-//        if (graph.getV()==null ||graph.getV().size()==0 || graph.getV().size()==1)
-//        {
-//            return true;
-//        }
-//        Iterator<node_data> nodes = graph.getV().iterator();
-//        while (nodes.hasNext())
-//        {
-//            node_data start= nodes.next();;
-//            if (start !=null)
-//            {
-//                DJ(start);
-//            }
-//            for (node_data n: graph.getV())
-//            {
-//                if (wieghts.get(n.getKey())==Double.MAX_VALUE)
-//                {
-//                    return false;
-//                }
-//            }
-//            return true;
-//        }
-//        return false;
-//        wieghts = setWieghts();
-//        parents = setParents();
-        if (graph.getV()==null ||graph.getV().size()==0 || graph.getV().size()==1)
-        {
+    public boolean isConnected() {
+        if (graph.getV() == null || graph.getV().size() == 0 || graph.getV().size() == 1) {
             return true;
         }
         Iterator<node_data> nodes = graph.getV().iterator();
-        if (nodes.hasNext())
-        {
-            node_data start= nodes.next();
-            DJ(graph,start);
-            for (node_data n: graph.getV())
-            {
-                if (n.getInfo()=="unvisited")
-                {
+        if (nodes.hasNext()) {
+            node_data start = nodes.next();
+            DJ(graph, start);
+            for (node_data n : graph.getV()) {
+                if (n.getInfo() == "unvisited") {
                     return false;
                 }
             }
             directed_weighted_graph RGraph = RCopy();
-            DJ(RGraph,start);
-            for (node_data n: RGraph.getV())
-            {
-                if (n.getInfo()=="unvisited")
-                {
+            DJ(RGraph, start);
+            for (node_data n : RGraph.getV()) {
+                if (n.getInfo() == "unvisited") {
                     return false;
                 }
             }
@@ -102,41 +71,35 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     }
 
     @Override
-    public double shortestPathDist(int src, int dest)
-    {
-//        wieghts = setWieghts();
-//        parents = setParents();
-        if (graph.getNode(src)==null || graph.getNode(dest) == null)
-        {
+    public double shortestPathDist(int src, int dest) {
+
+        if (graph.getNode(src) == null || graph.getNode(dest) == null) {
             return -1;
         }
-        if (src==dest)
-        {
+        if (src == dest) {
             return 0;
         }
-        DJ (graph, graph.getNode(src));
-        if (wieghts.get(dest)==Double.MAX_VALUE){return -1;}
+        DJ(graph, graph.getNode(src));
+        if (wieghts.get(dest) == Double.MAX_VALUE) {
+            return -1;
+        }
         return wieghts.get(dest);
     }
 
     @Override
-    public List<node_data> shortestPath(int src, int dest)
-    {
+    public List<node_data> shortestPath(int src, int dest) {
 //        wieghts = setWieghts();
 //        parents = setParents();
-        if (graph.getNode(src)==null ||graph.getNode(dest)==null)
-        {
+        if (graph.getNode(src) == null || graph.getNode(dest) == null) {
             return null;
         }
-        if (src ==dest)
-        {
-            List<node_data> re= new LinkedList<>();
+        if (src == dest) {
+            List<node_data> re = new LinkedList<>();
             re.add(graph.getNode(src));
             return re;
         }
-        DJ (graph, graph.getNode(src));
-        if (graph.getNode(dest).getTag() ==Integer.MAX_VALUE)
-        {
+        DJ(graph, graph.getNode(src));
+        if (graph.getNode(dest).getTag() == Integer.MAX_VALUE) {
             return null;
         }
         return shortestPath(graph.getNode(dest));
@@ -147,21 +110,20 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         Gson gson = new Gson();
         try (FileWriter writer = new FileWriter(file)) {
 
-            BoazGraph b =new BoazGraph();
-            for (node_data n:graph.getV())
-            {
+            BoazGraph b = new BoazGraph();
+            for (node_data n : graph.getV()) {
                 BoazNode newNode = new BoazNode();
-                newNode.id=n.getKey();
-                newNode.pos=n.getLocation().x()+","+ n.getLocation().y();
-                b.nodes =new ArrayList<>();
-                b.edges =new ArrayList<>();
+                newNode.id = n.getKey();
+                if (n.getLocation() == null) {
+                    newNode.pos = "null";
+                } else {
+                    newNode.pos = n.getLocation().x() + "," + n.getLocation().y();
+                }
+                b.nodes = new ArrayList<>();
+                b.edges = new ArrayList<>();
                 b.nodes.add(newNode);
-                for (edge_data e:graph.getE(n.getKey()))
-                {
-//                    EdgeData newEdge =new EdgeData(e.getSrc(), e.getDest(), e.getWeight());
-//                    newEdge.src =e.getSrc();
-//                    newEdge.dest =e.getDest();
-//                    newEdge.w =e.getWeight();
+                for (edge_data e : graph.getE(n.getKey())) {
+
                     b.edges.add((EdgeData) e);
                 }
             }
@@ -193,8 +155,8 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
 
         try (Reader reader = new FileReader(file)) {
-            BoazGraph g  = gson.fromJson(reader, BoazGraph.class);
-                // Convert JSON File to Java Object
+            BoazGraph g = gson.fromJson(reader, BoazGraph.class);
+            // Convert JSON File to Java Object
             return createGraph(g);
 
         } catch (IOException e) {
@@ -223,47 +185,40 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         Gson gson = new Gson();
 
 
-
-        BoazGraph g  = gson.fromJson(jsonGraph, BoazGraph.class);
-            // Convert JSON File to Java Object
+        BoazGraph g = gson.fromJson(jsonGraph, BoazGraph.class);
+        // Convert JSON File to Java Object
 
         return createGraph(g);
 
 
     }
 
-    private void DJ(directed_weighted_graph g,node_data s)
-    {
+    private void DJ(directed_weighted_graph g, node_data s) {
         wieghts.clear();
         parents.clear();
         Iterator<node_data> nodes = g.getV().iterator();
-        while (nodes.hasNext())
-        {
+        while (nodes.hasNext()) {
             node_data n = nodes.next();
-            wieghts.add(n.getKey(),Double.MAX_VALUE);
+            wieghts.add(n.getKey(), Double.MAX_VALUE);
             parents.add(n.getKey(), null);
             n.setInfo("unvisited");
         }
         PriorityQueue<node_data> queue = new PriorityQueue<node_data>();
         queue.add(s);
-        wieghts.set(s.getKey(),0.0);
+        wieghts.set(s.getKey(), 0.0);
         s.setInfo("visited");
 
-        while (!queue.isEmpty())
-        {
-            node_data current= queue.poll();
+        while (!queue.isEmpty()) {
+            node_data current = queue.poll();
             current.setInfo("visited");
-            if (g.getE(current.getKey()) != null)
-            {
-                for (edge_data curEdge : g.getE(current.getKey()))
-                {
-                    node_data ni =g.getNode(curEdge.getDest());
+            if (g.getE(current.getKey()) != null) {
+                for (edge_data curEdge : g.getE(current.getKey())) {
+                    node_data ni = g.getNode(curEdge.getDest());
                     double dis = g.getEdge(current.getKey(), ni.getKey()).getWeight() + wieghts.get(current.getKey());
-                    if (dis < wieghts.get(ni.getKey()) && ni.getInfo() == "unvisited")
-                    {
+                    if (dis < wieghts.get(ni.getKey()) && ni.getInfo() == "unvisited") {
                         wieghts.set(ni.getKey(), dis);
                         ni.setWeight(dis);
-                        parents.set(ni.getKey(),current);
+                        parents.set(ni.getKey(), current);
                         queue.add(ni);
                     }
                 }
@@ -273,14 +228,13 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     }
 
     private directed_weighted_graph RCopy() {
-        DWGraph_DS newGraph =new DWGraph_DS();
-        for (node_data n: graph.getV())
-        {
+        DWGraph_DS newGraph = new DWGraph_DS();
+        for (node_data n : graph.getV()) {
             newGraph.addNode(n);
         }
-        for (node_data n: graph.getV())//going through all the nodes in the graph
+        for (node_data n : graph.getV())//going through all the nodes in the graph
         {
-            for (edge_data ni: graph.getE(n.getKey()))//going through all the neighbors of the node
+            for (edge_data ni : graph.getE(n.getKey()))//going through all the neighbors of the node
             {
                 newGraph.connect(ni.getDest(), ni.getSrc(), ni.getWeight());
             }
@@ -288,42 +242,19 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return newGraph;
     }
 
-    private List<node_data> shortestPath(node_data dest)
-    {
+    private List<node_data> shortestPath(node_data dest) {
 
-        List <node_data> shorti = new LinkedList<>();
+        List<node_data> shorti = new LinkedList<>();
         shorti.add(dest);
-        node_data current=dest;
+        node_data current = dest;
 
-        while (parents.get(current.getKey())!=null)
-        {
+        while (parents.get(current.getKey()) != null) {
 
             node_data next = parents.get(current.getKey());
-            current=next;
-            shorti.add(0,next);
+            current = next;
+            shorti.add(0, next);
         }
         return shorti;
     }
-//
-//    private ArrayList<Double> setWieghts ()
-//    {
-//        ArrayList<Double> w = new ArrayList<>();
-//        for (int i = 0; i < graph.getV().size(); i++)
-//        {
-//            w.add(i, Double.MAX_VALUE);
-//        }
-//        return w;
-//    }
-//
-//    private ArrayList<node_data> setParents ()
-//    {
-//        ArrayList<node_data> p = new ArrayList<>();
-//        for (int i = 0; i < graph.getV().size(); i++)
-//        {
-//            p.add(i, null);
-//        }
-//        return p;
-//    }
-
 
 }

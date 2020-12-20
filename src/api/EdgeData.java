@@ -2,17 +2,8 @@ package api;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * this is the reprisantion of the edges on the graph
- */
 public class EdgeData implements edge_data {
-    /**
-     * each edge has a few fields:
-     * src - the source of the edge
-     * dest- the destaniton of the edge
-     * weight - the weight of the edge
-     *
-     */
+
     @SerializedName(value = "src")
     private int src;
     @SerializedName(value = "dest")
@@ -33,9 +24,9 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     * gets the id of the src node
+     * The id of the source node of this edge.
      *
-     * @return src
+     * @return
      */
     @Override
     public int getSrc() {
@@ -43,9 +34,9 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     * gets the id of the dest node
+     * The id of the destination node of this edge
      *
-     * @return dest
+     * @return
      */
     @Override
     public int getDest() {
@@ -53,7 +44,7 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     * @return the weight of the edge
+     * @return the weight of this edge (positive value).
      */
     @Override
     public double getWeight() {
@@ -61,9 +52,9 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     * Returns the info of the edge
+     * Returns the remark (meta data) associated with this edge.
      *
-     * @return weight
+     * @return
      */
     @Override
     public String getInfo() {
@@ -71,8 +62,9 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     * sets the info of the edge
-     * @param s- the given info
+     * Allows changing the remark (meta data) associated with this edge.
+     *
+     * @param s
      */
     @Override
     public void setInfo(String s) {
@@ -80,8 +72,10 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     *gets the tag of the edge
-     * @return the tag
+     * Temporal data (aka color: e,g, white, gray, black)
+     * which can be used be algorithms
+     *
+     * @return
      */
     @Override
     public int getTag() {
@@ -89,7 +83,9 @@ public class EdgeData implements edge_data {
     }
 
     /**
-     * sets the tag of the edge
+     * This method allows setting the "tag" value for temporal marking an edge - common
+     * practice for marking by algorithms.
+     *
      * @param t - the new value of the tag
      */
     @Override
@@ -97,11 +93,6 @@ public class EdgeData implements edge_data {
         tag = t;
     }
 
-    /**
-     * checks f two edges are equals
-     * @param obj -the other edge
-     * @return true of they are equals
-     */
     @Override
     public boolean equals(Object obj) {
         EdgeData n = (EdgeData) obj;

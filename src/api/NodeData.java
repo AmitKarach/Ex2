@@ -2,7 +2,7 @@ package api;
 
 import com.google.gson.annotations.SerializedName;
 
-public class NodeData implements node_data ,Comparable{
+public class NodeData implements node_data, Comparable {
     /**
      * Returns the key (id) associated with this node.
      *
@@ -16,32 +16,27 @@ public class NodeData implements node_data ,Comparable{
     @SerializedName(value = "pos")
     private GLocation gl;
 
-// TODO: Might Need this, Coontructor inc Location -
-//    public NodeData(geo_location location,int id) {
-//        this.key = id;
-//        this.setLocation(location);
-//        this.setWeight(0);
-//        this.setInfo("");
-//        this.setTag(0);
-//    }
 
     public NodeData(int k) {
         key = k;
     }
-    public NodeData(int k,double weight,GLocation location) {
+
+    public NodeData(int k, double weight, GLocation location) {
         key = k;
-        wei=weight;
-        gl=location;
+        wei = weight;
+        gl = location;
     }
-    public NodeData(int k,double weight,GLocation location,int ta) {
+
+    public NodeData(int k, double weight, GLocation location, int ta) {
         key = k;
-        wei=weight;
-        gl=location;
-        tag=ta;
+        wei = weight;
+        gl = location;
+        tag = ta;
     }
-    public NodeData(int k,double weight) {
+
+    public NodeData(int k, double weight) {
         key = k;
-        wei=weight;
+        wei = weight;
     }
 
     @Override
@@ -69,7 +64,7 @@ public class NodeData implements node_data ,Comparable{
      */
     @Override
     public void setLocation(geo_location p) {
-        gl =(GLocation) p;
+        gl = (GLocation) p;
     }
 
     @Override
@@ -144,16 +139,16 @@ public class NodeData implements node_data ,Comparable{
     public void setTag(int t) {
         tag = t;
     }
+
     @Override
-        public int compareTo(Object o)
-        {
-            node_data n = (node_data) o;
-            if (n.getWeight()>wei)
-                return -1;
-            if (n.getWeight()<wei)
-                return 1;
-            return 0;
-        }
+    public int compareTo(Object o) {
+        node_data n = (node_data) o;
+        if (n.getWeight() > wei)
+            return -1;
+        if (n.getWeight() < wei)
+            return 1;
+        return 0;
+    }
 
 
 }

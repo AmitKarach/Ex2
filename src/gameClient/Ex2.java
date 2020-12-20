@@ -13,9 +13,6 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-/**
- * this is where the game happens
- */
 public class Ex2 implements Runnable {
     private static Javi _aviWindow;
     private static JavaFram _win;
@@ -25,22 +22,11 @@ public class Ex2 implements Runnable {
     private static HashMap<Integer, CL_Pokemon> agentsPokemons;
     private static int cheakForRepet = 0;
 
-    public static void main(String[] a)
-    {
-        if (a.length ==0) {
-            _aviWindow = new Javi();
-        }
-        else
-        {
-
-        }
+    public static void main(String[] a) {
+        _aviWindow = new Javi();
     }
 
-    /**
-     * we start by initing the game and we start the game
-     * whille the game is runnning we cheaks if there is an agents in the same edge as the pokemon and if so we lower the sleep so
-     * we will make more moves and the catch the pokemon
-     */
+
     public void run() {
         while (true)
         {
@@ -71,12 +57,11 @@ public class Ex2 implements Runnable {
 //                   Thread agents = new AgentT(i, game, _ar, jp);
 //                   agents.start();
 //            }
-//            Double epsi = Double.MIN_VALUE;
+
             while (game.isRunning()) {
                 int ind = 0;
                 moveAgants(game, g);
                 long dt = 150;
-
 
                 for (int i = 0; i < _ar.getAgents().size(); i++)
                 {
@@ -84,16 +69,20 @@ public class Ex2 implements Runnable {
                         if (_ar.getAgents().get(i).getSrcNode() == agentsPokemons.get(i).get_edge().getSrc()) {
                             dt = 85;
                         }
-//                        if ((agentsPokemons.get(i).getLocation().distance(_ar.getAgents().get(i).getLocation())*1000)/_ar.getAgents().get(i).getSpeed() < epsi)
-//                        {
-//                            dt =5;
-//                        }
-//                        double pokemonLocation =( agentsPokemons.get(i).getLocation().distance(_ar.getAgents().get(i).getLocation()))/(g.getNode(_ar.getAgents().get(i).getSrcNode()).(g.getNode(_ar.getAgents().get(i).getNextNode()).getLocation()));
-//                        double timeOnTheEdge = (agentsPokemons.get(i).get_edge().getWeight()*1000)/_ar.getAgents().get(i).getSpeed();
-//
-//
-
                     }
+                }
+//                        if (_ar.getAgents().get(i).get_curr_edge() != null)
+//                        {
+//                            System.out.println((long)((_ar.getAgents().get(i).get_curr_edge().getWeight()*1000)/_ar.getAgents().get(i).getSpeed()));
+//                        }
+//                    if (_ar.getAgents().get(i).get_curr_edge().getWeight()*1000)
+//                    {
+//
+//                    }
+
+                if (cheakForRepet == 2) {
+                    dt = 50;
+                    cheakForRepet = 0;
                 }
                 try {
                     if (ind % 1 == 0) {
@@ -116,12 +105,7 @@ public class Ex2 implements Runnable {
 
     }
 
-    /**
-     * here we init the game and all the graphic that comes with it
-     * each agent is set next to the highest vlue pokemon there is on the graph
-     * @param game -the game
-     * @throws JSONException
-     */
+
     public static void initGame(game_service game) throws JSONException {
         //starts the graph
         DWGraph_DS g = new DWGraph_DS();
@@ -174,12 +158,7 @@ public class Ex2 implements Runnable {
         }
     }
 
-    /**
-     * here we are moving the agents we checks for each agent if he got to his given dest and if so we
-     * are cheackig where he needs to go next using the next function
-     * @param game -the game
-     * @param graph -the graph on wich the game is played
-     */
+
     private static void moveAgants(game_service game, directed_weighted_graph graph) {
         String moveOut = game.move();
         List<CL_Agent> agentsLocation = Arena.getAgents(moveOut, graph);
@@ -205,17 +184,7 @@ public class Ex2 implements Runnable {
         }
     }
 
-    /**
-     * here we cheacks where the agent should go next
-     * we first cheacking if there are new pokemons on the graph and then we are cheacking if there are agents that
-     * are closer to each pokemon and if so we dont need to go to them ourself and we takes them of our list
-     * then we go thourgh the list and finding the closest pokemon to us and we set curse to this pokemon src of the edge
-     * then when we get to his src of the edge we go to the dest throght the edge that the pokemon is on
-     * @param game the game
-     * @param g the graph
-     * @param ag -our agent
-     * @return
-     */
+
     private static int nextNode(game_service game, directed_weighted_graph g, CL_Agent ag) {
         List<node_data> shorti;
         int src = ag.getSrcNode();
