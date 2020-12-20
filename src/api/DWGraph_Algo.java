@@ -17,17 +17,28 @@ public class DWGraph_Algo implements dw_graph_algorithms {
     public DWGraph_Algo() {
         graph = new DWGraph_DS();
     }
-
+    /**
+     * the builder of the WGraph_Algo
+     * gets a weighted_graph and does a shallow copy to our graph
+     * @param g- a weighted_graph to init our graph with
+     */
     @Override
     public void init(directed_weighted_graph g) {
         graph = g;
     }
-
+    /**
+     * this function returns the graph
+     * @return weighted_graph-graph
+     */
     @Override
     public directed_weighted_graph getGraph() {
         return graph;
     }
 
+    /**
+     * this function does a deep copy to our graph to a new graph
+     * @return the new graph
+     */
     @Override
     public directed_weighted_graph copy() {
         DWGraph_DS newGraph = new DWGraph_DS();
@@ -45,6 +56,15 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return newGraph;
     }
 
+    /**
+     * this function checks if all the nodes of the graph are connected
+     * after using the DJ function this function goes over every node and
+     * checks if his tag is not Integer.Max_Value because the function DJ
+     * goes over all the nodes that are connected to a certion node and give them
+     * tag that, if DJ dident give this node a tag that means he is not connected to
+     * the node and that means that the graph is not connected
+     * @return true if the graph is all connected
+     */
     @Override
     public boolean isConnected() {
         if (graph.getV() == null || graph.getV().size() == 0 || graph.getV().size() == 1) {
@@ -70,6 +90,13 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return true;
     }
 
+    /**
+     * this function returns the shortest distance between this two nodes
+     * using the DJ function that does that
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return the smallest wight of all the edges between them
+     */
     @Override
     public double shortestPathDist(int src, int dest) {
 
@@ -86,6 +113,16 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return wieghts.get(dest);
     }
 
+    /**
+     * this function returns all the nodes that are in the smallest path
+     * between this nodes (when src is the first in the list and dest is the last)
+     * using the DJ function to map the graph and shortestPath that gets only the dest
+     * node (node_info)
+     * @param src - start node
+     * @param dest - end (target) node
+     * @return a LinkedList contains all the nodes in the smallest path between this two nodes
+     * returns null if there is no path or if there are no nodes like that in the graph
+     */
     @Override
     public List<node_data> shortestPath(int src, int dest) {
 //        wieghts = setWieghts();
@@ -105,7 +142,11 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return shortestPath(graph.getNode(dest));
 
     }
-
+    /**
+     * saves the graph (object) to computer in the given file name
+     * @param file - the file name (may include a relative path).
+     * @return true if it could save the graph
+     */
     public boolean save(String file) {
         Gson gson = new Gson();
         try (FileWriter writer = new FileWriter(file)) {
@@ -165,6 +206,11 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         }
     }
 
+    /**
+     * this function creats a graph from the json we get
+     * @param g- the boaz jason graph
+     * @return true if it created a graph
+     */
     private boolean createGraph(BoazGraph g) {
         for (BoazNode d : g.nodes) {
             NodeData nodeData = new NodeData(d.id);
@@ -180,6 +226,11 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return true;
     }
 
+    /**
+     * loads a graph from a String json
+     * @param jsonGraph string json we get
+     * @return true if creats a graph
+     */
     public synchronized boolean loadGraph(String jsonGraph) {
 
         Gson gson = new Gson();
@@ -192,7 +243,17 @@ public class DWGraph_Algo implements dw_graph_algorithms {
 
 
     }
-
+    /**
+     * this function starts by giving all the nodes in the graph tag= Integer.Max_Value and changing all the nodes info
+     * to "unvisited"
+     * after that he gives the given starting node tag value of 0 and chang his info to "visited" and the goes through all the
+     * neighbors of each node starting with our starting node and giving them the min distance between them and the
+     * starting node (the distance is the smallest wight of edges between them and the starting node)
+     * after standing on a node we will change his info to "visited" which means we found the shortest path to him and
+     * we dont need to check for a smaller path for him down the road.
+     * i am using here a PriorityQueue
+     * @param s- the starting node
+     */
     private void DJ(directed_weighted_graph g, node_data s) {
         wieghts.clear();
         parents.clear();
@@ -227,6 +288,10 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         }
     }
 
+    /**
+     * copying the graph but revers all the edges
+     * @return the revers graph
+     */
     private directed_weighted_graph RCopy() {
         DWGraph_DS newGraph = new DWGraph_DS();
         for (node_data n : graph.getV()) {
@@ -242,6 +307,11 @@ public class DWGraph_Algo implements dw_graph_algorithms {
         return newGraph;
     }
 
+    /**
+     * creats a list of the shortest path
+     * @param dest the destanition node
+     * @return the list
+     */
     private List<node_data> shortestPath(node_data dest) {
 
         List<node_data> shorti = new LinkedList<>();

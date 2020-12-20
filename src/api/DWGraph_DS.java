@@ -20,10 +20,9 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * returns the node_data by the node_id,
-     *
+     * this function returns the node with this given key
      * @param key - the node_id
-     * @return the node_data by the node_id, null if none.
+     * @return the node, if this node is not in the graph return null
      */
     @Override
     public node_data getNode(int key) {
@@ -34,12 +33,10 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * returns the data of the edge (src,dest), null if none.
-     * Note: this method should run in O(1) time.
-     *
-     * @param src
-     * @param dest
-     * @return
+     * this function check to see if there is an edge between two given keys (nodes)
+     * @param src- the first node
+     * @param dest-the second node
+     * @return the edge
      */
     // More Elegant approach with try & Catch
     @Override
@@ -52,10 +49,8 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * adds a new node to the graph with the given node_data.
-     * Note: this method should run in O(1) time.
-     *
-     * @param n
+     * adds a node to the graph
+     * @param n-the node
      */
     @Override
     public void addNode(node_data n) throws RuntimeException {
@@ -68,12 +63,13 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * Connects an edge with weight w between node src to node dest.
-     * * Note: this method should run in O(1) time.
-     *
-     * @param src  - the source of the edge.
-     * @param dest - the destination of the edge.
-     * @param w    - positive weight representing the cost (aka time, price, etc) between src-->dest.
+     * this function connects two nodes with a given wight, if there is already an edge
+     * between this two nodes its checks if the w is different from the wight there is
+     * now and if so it changes the wight to the given w
+     * if one of the nodes is not in the graph this function does nothing
+     * @param src the first node
+     * @param dest-the second node
+     * @param w- the weight of the edge
      */
     @Override
     public void connect(int src, int dest, double w) {
@@ -100,10 +96,7 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * This method returns a pointer (shallow copy) for the
-     * collection representing all the nodes in the graph.
-     * Note: this method should run in O(1) time.
-     *
+     *gets all the nodes int he graph
      * @return Collection<node_data>
      */
     @Override
@@ -112,12 +105,8 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * This method returns a pointer (shallow copy) for the
-     * collection representing all the edges getting out of
-     * the given node (all the edges starting (source) at the given node).
-     * Note: this method should run in O(k) time, k being the collection size.
-     *
-     * @param node_id
+     * gets all the neighbors of the node
+     * @param node_id -the node
      * @return Collection<edge_data>
      */
     @Override
@@ -127,12 +116,12 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * Deletes the node (with the given ID) from the graph -
-     * and removes all edges which starts or ends at this node.
-     * This method should run in O(k), V.degree=k, as all the edges should be removed.
-     *
-     * @param key
-     * @return the data of the removed node (null if none).
+     * this function removes a given node from the graph
+     * this mean we go to all the neighbors of the given node and delete the given node
+     * from their list of neighbors and then deletes the node ftom the graph and the
+     * edges list
+     * @param key-the key of the node we want to delete
+     * @return the deleted node
      */
     @Override
     public node_data removeNode(int key) {
@@ -156,11 +145,9 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * Deletes the edge from the graph,
-     * Note: this method should run in O(1) time.
-     *
-     * @param src
-     * @param dest
+     *remves the edge between two nodes
+     * @param src the src
+     * @param dest the dest
      * @return the data of the removed edge (null if none).
      */
     @Override
@@ -181,10 +168,8 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * Returns the number of vertices (nodes) in the graph.
-     * Note: this method should run in O(1) time.
-     *
-     * @return
+     *number of nodes in the graph
+     * @return number of nodes
      */
     @Override
     public int nodeSize() {
@@ -192,10 +177,7 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * Returns the number of edges (assume directional graph).
-     * Note: this method should run in O(1) time.
-     *
-     * @return
+     * @return the number of edges in the graph
      */
     @Override
     public int edgeSize() { // every edge is an obj so might be smart to just count edge node...
@@ -203,9 +185,7 @@ public class DWGraph_DS implements directed_weighted_graph, Serializable {
     }
 
     /**
-     * Returns the Mode Count - for testing changes in the graph.
-     *
-     * @return
+     * @return the mc
      */
     @Override
     public int getMC() {

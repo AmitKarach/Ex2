@@ -2,11 +2,15 @@ package api;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * this will reprisent our nodes in the graph
+ */
 public class NodeData implements node_data, Comparable {
     /**
-     * Returns the key (id) associated with this node.
-     *
-     * @return
+     * every node have a few fileds :
+     * the key- the i of the node
+     * the weight -the weight of the node
+     * and the location gl of the node
      */
     @SerializedName(value = "id")
     private final int key;
@@ -39,16 +43,16 @@ public class NodeData implements node_data, Comparable {
         wei = weight;
     }
 
+    /**
+     * @return the id
+     */
     @Override
     public int getKey() {
         return key;
     }
 
     /**
-     * Returns the location of this node, if
-     * none return null.
-     *
-     * @return
+     * @return the location of the node
      */
     @Override
     public geo_location getLocation() {
@@ -58,8 +62,7 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Allows changing this node's location.
-     *
+     * changes the location of the node
      * @param p - new new location  (position) of this node.
      */
     @Override
@@ -67,6 +70,9 @@ public class NodeData implements node_data, Comparable {
         gl = (GLocation) p;
     }
 
+    /**
+     * @return prints the node
+     */
     @Override
     public String toString() {
         return "NodeData{" +
@@ -79,9 +85,7 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Returns the weight associated with this node.
-     *
-     * @return
+     * @return the weight of the node
      */
     @Override
     public double getWeight() {
@@ -89,8 +93,7 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Allows changing this node's weight.
-     *
+     * changes the weight of the node
      * @param w - the new weight
      */
     @Override
@@ -99,9 +102,7 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Returns the remark (meta data) associated with this node.
-     *
-     * @return
+     * @return the node info
      */
     @Override
     public String getInfo() {
@@ -109,9 +110,8 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Allows changing the remark (meta data) associated with this node.
-     *
-     * @param s
+     *changes the nodes info
+     * @param s- the new info
      */
     @Override
     public void setInfo(String s) {
@@ -119,10 +119,7 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Temporal data (aka color: e,g, white, gray, black)
-     * which can be used be algorithms
-     *
-     * @return
+     * @return the tag
      */
     @Override
     public int getTag() {
@@ -130,9 +127,7 @@ public class NodeData implements node_data, Comparable {
     }
 
     /**
-     * Allows setting the "tag" value for temporal marking an node - common
-     * practice for marking by algorithms.
-     *
+     * changes the tag
      * @param t - the new value of the tag
      */
     @Override
@@ -140,6 +135,13 @@ public class NodeData implements node_data, Comparable {
         tag = t;
     }
 
+    /**
+     * cheacks if two nodes are bigger
+     * @param o the other node
+     * @return -1 if the other node is bigger
+     * 1 if this node is bigger
+     * 0 if they are equals
+     */
     @Override
     public int compareTo(Object o) {
         node_data n = (node_data) o;
