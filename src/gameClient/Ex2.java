@@ -10,9 +10,11 @@ import gameClient.util.JavaFram;
 import gameClient.util.Javi;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.*;
 
+/**
+ * this is our game:)
+ */
 public class Ex2 implements Runnable {
     private static Javi _aviWindow;
     private static JavaFram _win;
@@ -105,6 +107,11 @@ public class Ex2 implements Runnable {
 
     }
 
+    /**
+     * this is where we init the game and we put each agent next to the src of the edge of the most value pokemon in the graph
+     * @param game-the game
+     * @throws JSONException
+     */
 
     public static void initGame(game_service game) throws JSONException {
         //starts the graph
@@ -158,7 +165,12 @@ public class Ex2 implements Runnable {
         }
     }
 
-
+    /**
+     * this is where we move the agent and we check if the agent gets to the destantion we gave him he need a new destantion with
+     * the function nextNode
+     * @param game-the game
+     * @param graph-the graph
+     */
     private static void moveAgants(game_service game, directed_weighted_graph graph) {
         String moveOut = game.move();
         List<CL_Agent> agentsLocation = Arena.getAgents(moveOut, graph);
@@ -184,7 +196,19 @@ public class Ex2 implements Runnable {
         }
     }
 
-
+    /**
+     * this is where the ageant get his next destantion
+     * first we updat our ist of pokemons
+     * then we cheack if there is a closer agent to a pokemon there is no need to send this agent there too so
+     * we removes him from the list
+     * then we go throgh the list and find the closest pokemon from where we are to his src
+     * then we send our agent to his src
+     * and when we get to the src we send him to the dest on the same edge as the pokemon and we cathch him
+     * @param game-the game
+     * @param g-the graph
+     * @param ag-our agent
+     * @return the next dest
+     */
     private static int nextNode(game_service game, directed_weighted_graph g, CL_Agent ag) {
         List<node_data> shorti;
         int src = ag.getSrcNode();
