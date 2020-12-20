@@ -13,17 +13,16 @@ public class EdgeData implements edge_data {
     private double weight;
     private String info;
 
-    public EdgeData ()
-    {
+    public EdgeData() {
 
     }
 
-    public EdgeData (int s, int d, double w)
-    {
-        src= s;
-        dest =d;
-        weight=w;
+    public EdgeData(int s, int d, double w) {
+        src = s;
+        dest = d;
+        weight = w;
     }
+
     /**
      * The id of the source node of this edge.
      *
@@ -68,9 +67,8 @@ public class EdgeData implements edge_data {
      * @param s
      */
     @Override
-    public void setInfo(String s)
-    {
-        info=s;
+    public void setInfo(String s) {
+        info = s;
     }
 
     /**
@@ -91,16 +89,13 @@ public class EdgeData implements edge_data {
      * @param t - the new value of the tag
      */
     @Override
-    public void setTag(int t)
-    {
-        tag=t;
+    public void setTag(int t) {
+        tag = t;
     }
 
     @Override
     public boolean equals(Object obj) {
         EdgeData n = (EdgeData) obj;
-        if (n.getDest() == dest && n.getSrc() == src)
-            return true;
-        return false;
+        return n.getDest() == dest && n.getSrc() == src;
     }
 }

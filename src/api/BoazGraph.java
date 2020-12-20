@@ -11,13 +11,6 @@ public class BoazGraph
     @SerializedName(value = "Nodes")
     List<BoazNode> nodes;
 
-//    static class BoazEdge {
-//        int src;
-//
-//        double w;
-//
-//        int dest;
-//    }
 
     static class BoazNode {
         int id;
